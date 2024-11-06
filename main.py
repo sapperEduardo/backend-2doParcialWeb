@@ -10,6 +10,10 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+@app.get("/")
+def read_root():
+    return {"message": "¡La API está activa y funcionando!"}
+
 
 app.include_router(alumno)
 app.include_router(materia)
