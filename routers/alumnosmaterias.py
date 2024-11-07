@@ -72,10 +72,6 @@ async def get_materias_alumno(
             Materia.id.in_([inscripcion.idMateria for inscripcion in inscripciones])
         ).all()
 
-        # Verificar si se encontraron materias
-        if not materias:
-            raise HTTPException(status_code=404, detail="No se encontraron materias para el alumno especificado")
-
         return materias
 
     except Exception as e:
@@ -100,10 +96,6 @@ async def get_alumnos_materia(
             Alumno.id.in_([inscripcion.idAlumno for inscripcion in inscripciones])
         ).all()
 
-        # Verificar si se encontraron alumnos
-        if not alumnos:
-            raise HTTPException(status_code=404, detail="No se encontraron alumnos para la materia especificada")
-            
 
         return alumnos
 
