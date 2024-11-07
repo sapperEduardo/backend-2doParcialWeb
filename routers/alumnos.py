@@ -75,6 +75,22 @@ async def get_one_alumno(
     except Exception as e:
         return e
 
+# READ INDIVIDUAL por nombre y apellido
+@alumno.get("/nombre/{nombre}/apellido/{apellido}")
+async def get_alumno_by_name_and_surname(
+    nombre: str = Path(..., description="Nombre del alumno"),
+    apellido: str = Path(..., description="Apellido del alumno"),
+    db: Session = Depends(get_db)
+):
+
+    try:
+        get_alumno: Alumno = db.query(Alumno).filter(Alumno.nombre == nombre, Alumno.apellido == apellido).first()
+        if not get_alumno:
+            raise HTTPException(status_code=404, detail="Alumno not found")
+        return get_alumno
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al buscar alumno: {str(e)}")
+
 
 
 
