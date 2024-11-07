@@ -72,7 +72,22 @@ async def get_one_materia(
         return e
     except Exception as e:
         return e
-   
+
+# READ INDIVIDUAL POR NOMBRE
+@materia.get("/materia/nombre/{nombre}")
+async def get_materia_by_name(
+    nombre: str = Path(..., description="Nombre de la materia"),
+    db: Session = Depends(get_db)
+):
+
+    try:
+        get_materia: Materia = db.query(Materia).filter(Materia.nombre == nombre).first()
+        if not get_materia:
+            raise HTTPException(status_code=404, detail="Materia not found")
+        return get_materia
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error al buscar materia: {str(e)}")
+
 
 
 
